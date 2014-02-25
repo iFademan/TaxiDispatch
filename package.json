@@ -1,0 +1,30 @@
+{
+  "name": "TaxiDispatch",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "express": "3.4.8",
+    "connect": "~2.12.0",
+    "nconf": "~0.6.9",
+    "winston": "~0.7.2",
+    "consolidate": "~0.10.0",
+    "jade": "~1.1.5",
+    "mongodb": "~1.3.23",
+    "connect-mongo": "~0.4.0",
+    "mongoose": "~3.8.6",
+    "async": "~0.2.10",
+    "passport": "~0.2.0",
+    "socket.io": "~0.9.16",
+    "cookie": "~0.1.0",
+    "scss": "~0.2.4",
+    "bootable": "~0.2.2",
+    "bootable-environment": "~0.2.0",
+    "passport-local": "~0.1.6",
+    "winston-wrapper": "~1.0.1",
+    "require-tree": "~0.3.3",
+    "passport.socketio": "~3.0.0"
+  }
+}

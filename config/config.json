@@ -1,0 +1,66 @@
+{
+    "port": 3000,
+    "mongoose": {
+        "uri": "mongodb://localhost/TaxiDispatchDb",
+        "options": {
+            "server": {
+                "socketOptions": {
+                    "keepAlive": 1
+                }
+            }
+        }
+    },
+
+    "session": {
+        "secret": "BattletoadsAndDoubleDragons",
+        "key": "sid",
+        "cookie": {
+            "path": "/",
+            "httpOnly": true,
+            "maxAge": null
+        }
+    },
+
+    "status": {
+        "queue": {
+            "key": "queue",
+            "style": "label label-warning",
+            "text": "Queue"
+        },
+        "search": {
+            "key": "search",
+            "style": "label label-warning",
+            "text": "Search driver"
+        },
+        "found": {
+            "key": "found",
+            "style": "label label-success",
+            "text": "Driver found"
+        },
+        "going": {
+            "key": "going",
+            "style": "label label-warning",
+            "text": "Going to start address"
+        },
+        "place": {
+            "key": "place",
+            "style": "label label-success",
+            "text": "Came to start address"
+        },
+        "waiting": {
+            "key": "waiting",
+            "style": "label label-warning",
+            "text": "Waiting..."
+        },
+        "passenger": {
+            "key": "passenger",
+            "style": "label label-success",
+            "text": "With passenger"
+        },
+        "close": {
+            "key": "close",
+            "style": "label label-default",
+            "text": "Close order"
+        }
+    }
+}

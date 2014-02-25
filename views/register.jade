@@ -1,0 +1,67 @@
+extends layout/layout
+
+block prepend content
+    script(src="/js/register-components.js")
+    .row
+        .col-md-4.col-md-offset-4
+            legend.center
+                a(href='#')
+                    i.glyphicon.glyphicon-globe
+                | Sign up!
+            .account-wall
+                form.form-signup(method="post")
+                    input#field-nickname.form-control(name='login', placeholder='Login', type='text', required='true', autofocus='true')
+                    input#field-email.form-control(name='fullname', placeholder='Full Name', type='text', required='true')
+                    input#field-password.form-control(name='password', placeholder='New Password', type='password', required='true')
+                    input#field-password-confirm.form-control(name='password_confirmation', placeholder='Confirm Password', type='password', required='true')
+                    label(for='')
+                      | Birthday
+                    .input-group.date
+                        input.form-control(type="text", name="age", required='true')
+                        span.input-group-addon
+                            i.glyphicon.glyphicon-th
+                    br
+                    .form-group
+                        input#option1.radio1.radio-no-uncheck(
+                            type="radio",
+                            data-on="success",
+                            data-off="danger",
+                            name="radioGender",
+                            checked,
+                            data-on-label="I",
+                            data-off-label="O",
+                            value="m")
+                        label(for='option1') &nbspMale
+                        | &nbsp
+                        input#option2.radio1.radio-no-uncheck(type="radio",
+                            data-on="success",
+                            data-off="danger",
+                            name="radioGender",
+                            data-on-label="I",
+                            data-off-label="O",
+                            value="f")
+                        label(for='option2') &nbspFemale
+                    .form-group
+                        input#checkbox1(
+                        type="checkbox",
+                        data-on="success",
+                        data-off="danger",
+                        name="checkSmoking",
+                        data-on-label="I",
+                        data-off-label="O")
+                        label(for='option3') &nbspSmoking
+                    legend.center
+                    .form-group
+                        input.checkbox2(
+                        type="checkbox",
+                        data-on="success",
+                        data-off="danger",
+                        name="checkDrivers",
+                        data-on-label="I",
+                        data-off-label="O")
+                        label(for='option4') &nbspDrivers
+                    input#driverLicenseId.form-control(name='driverLicenseId', placeholder='Driver License ID', type='text')
+                    input#experience.form-control(name='experience', placeholder='Experience', type='text')
+                    br
+                    button.btn.btn-lg.btn-primary.btn-block(type='submit')
+                        | Sign up

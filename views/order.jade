@@ -1,0 +1,47 @@
+extends layout/layout
+
+block prepend content
+    script(src='/js/socket-client.js')
+
+    .row
+        h2.center
+        // здесь полученный заголовок панели с сервера, добавит jquery
+    .row
+        .col-md-4
+            .account-wall-titless
+                form.form-signup
+                    input#field-nickname.form-control(name='startAddress', placeholder='Start address', type='text', required='true', autofocus='true')
+                    input#field-email.form-control(name='endAddress', placeholder='Destination address', type='text', required='true')
+                    br
+                    button#btnCreateOrder.btn.btn-lg.btn-primary.btn-block(type='button')
+                        | Add order
+                    button#btnApplyOrder.btn.btn-lg.btn-primary.btn-block(type='button')
+                        | Orders apply
+
+        .col-md-8
+            // здесь сгенеренную таблицу с сервера добавит jquery для водителей
+            h4.center New orders
+            table#newOrder.table.table-hover
+                thead
+                    tr
+                        th Start address
+                        th Destination address
+                        th Status
+                tbody
+                    tr
+                        td.text-center(colspan='3')
+                            | - empty -
+                // здесь сгенеренную таблицу с сервера добавит jquery
+            br
+            h4.center Old orders
+            table#oldOrder.table.table-hover
+                thead
+                    tr
+                        th Start address
+                        th Destination address
+                        th Status
+                tbody
+                    tr
+                        td.text-center(colspan='3')
+                            | - empty -
+                // здесь сгенеренную таблицу с сервера добавит jquery

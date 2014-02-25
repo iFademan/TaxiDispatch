@@ -1,0 +1,28 @@
+header.navbar.navbar-fixed-top.navbar-inverse(role='navigation')
+    script.
+        // Dropdown menu
+        $(function() {
+            $('.dropdown-toggle').dropdown()
+        });
+    .navbar-inner
+        .container
+            .navbar-header
+                a.navbar-brand(href='/') TaxiOnline
+            nav
+                ul.nav.navbar-nav.navbar-right
+                    li
+                        a(href='/') Home
+                    - if (user) {
+                    li
+                        a(href='/order') Order
+                    li.dropdown
+                        a.dropdown-toggle(href='#', data-toggle='dropdown')
+                            | #{user.login}
+                            b.caret
+                            ul.dropdown-menu
+                                li
+                                    a(href='/logout') Sign out
+                    - } else {
+                    li
+                        a(href='/login') Sign in
+                    - }

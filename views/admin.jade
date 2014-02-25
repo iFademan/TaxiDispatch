@@ -1,0 +1,49 @@
+extends layout/layout
+
+block prepend content
+    script(src='/js/socket-client.js')
+    .row
+        h2.center
+        // здесь полученный заголовок панели с сервера, добавит jquery
+    .row
+        .col-md-10.col-md-offset-1
+            h4.center Free list of drivers
+            table#listFreeDrivers.table.table-hover
+                thead
+                    tr
+                        th Name
+                        th Driver license id
+                        th Experience
+                        th Age
+                        th Gender
+                tbody
+                    tr
+                        td.text-center(colspan='5')
+                            | - empty or update with 10 second delay -
+                // здесь сгенеренную таблицу с сервера добавит jquery
+            br
+            h4.center List of outstanding orders
+            table#listOutstandOrders.table.table-hover
+                thead
+                    tr
+                        th Start address
+                        th Destination address
+                        th Status
+                tbody
+                    tr
+                        td.text-center(colspan='3')
+                            | - empty or update with 10 second delay -
+                // здесь сгенеренную таблицу с сервера добавит jquery
+            br
+            h4.center List of clients
+            table#listOfClients.table.table-hover
+                thead
+                    tr
+                        th Name
+                        th Age
+                        th Gender
+                tbody
+                    tr
+                        td.text-center(colspan='3')
+                            | - empty or update with 10 second delay -
+                // здесь сгенеренную таблицу с сервера добавит jquery

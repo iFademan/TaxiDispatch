@@ -1,0 +1,23 @@
+extends  layout/layout
+
+block prepend content
+    .row
+        .col-sm-6.col-md-4.col-md-offset-4
+            legend.center
+                a(href="#")
+                    i.glyphicon.glyphicon-globe
+                | Sign in
+            .account-wall
+                img.profile-img(alt="", src="https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=120")
+
+                form.form-signin(method="post")
+                    input.form-control(name="login", type="text", placeholder="Login", required="true", autofocus="true")
+                    input.form-control(name="password", type="password", placeholder="Password", required="true")
+                    button.btn.btn-lg.btn-primary.btn-block(type='submit') Sign in
+
+                    label.checkbox.pull-left
+                        input(type="checkbox", name="rememberMe")
+                        | Remember me
+                    a.pull-right.need-help(href="/") Need help?
+                    span.clearfix
+            a.text-center.new-account(href="/register") Create an account

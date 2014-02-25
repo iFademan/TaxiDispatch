@@ -1,0 +1,19 @@
+doctype html
+html(lang="en")
+    head
+        title #{title}
+        link(rel='stylesheet', type='text/css', href='/css/app.css')
+        link(rel='stylesheet', type='text/css', href='/vendor/bower_components/bootstrap-switch/build/css/bootstrap3/bootstrap-switch.min.css')
+        link(rel='stylesheet', type='text/css', href='/vendor/bower_components/bootstrap-datepicker/css/datepicker3.css')
+
+        script(src='/vendor/bower_components/socket.io-client/dist/socket.io.js')
+        script(src='/vendor/bower_components/jquery/jquery.js')
+        script(src='/vendor/bower_components/bootstrap-datepicker/js/bootstrap-datepicker.js')
+        script(src='/vendor/bower_components/bootstrap-switch/build/js/bootstrap-switch.min.js')
+        script(src='/vendor/bower_components/bootstrap-sass/vendor/assets/javascripts/bootstrap/dropdown.js')
+        script(src='/vendor/bower_components/bootstrap-sass/vendor/assets/javascripts/bootstrap.js')
+    body
+        .container
+            include ../partials/header
+            block content
+            include  ../partials/footer
