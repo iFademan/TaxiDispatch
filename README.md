@@ -1,8 +1,9 @@
 TaxiDispatch
 ============
+This small service was created as a test job on javascript, jade, node.js, mongodb, socket.io and much more
 
 Install
-
+============
 1. clone from GitHub. Clone URL: https://github.com/iFademan/TaxiDispatch.git
 2. Install node modules via command "npm install"
 3. In the startup configuration to add environment variables: NODE_ENV=development; NODE_PATH=.;
