@@ -11,10 +11,10 @@ var socket = io.connect('', {
 });
 
 $(function() {
-    var btnApplyOrder = $("#btnApplyOrder");
-    var btnCreateOrder = $("#btnCreateOrder");
-    var startField = $("#field-nickname");
-    var endField = $("#field-email");
+    var btnApplyOrder = $('#btnApplyOrder');
+    var btnCreateOrder = $('#btnCreateOrder');
+    var startField = $('#field-nickname');
+    var endField = $('#field-email');
 
     // отправка данных на создание нового ордера
     btnCreateOrder.click(function() {
@@ -33,9 +33,8 @@ $(function() {
     btnApplyOrder.click(function() {
         socketOrdersApply();
         startField.focus();
-    })
+    });
 });
-
 
 // ---------- sockets functions ---------- \\
 
@@ -43,7 +42,7 @@ var socketOrdersCreate = function(data) {
     console.log('заказ создается...');
     socket.emit('orders:create', data, function(callback) {
         console.log(callback);
-        //$("#btnApplyOrder").removeAttr('disabled');
+        //$('#btnApplyOrder').removeAttr('disabled');
     });
 };
 
@@ -93,16 +92,16 @@ socket.on('orders:isDriver', function(data, callback) {
         setHeaderDriverTable(isDriver);
     });
     callback('isDriver доставлен клиенту');
-    console.log("User isDriver: " + JSON.stringify(data));
+    console.log('User isDriver: ' + JSON.stringify(data));
 });
 
 socket.on('drivers:getassigned', function(data, callback) {
     assignedOrders = data.assignedOrders;
     $(function() {
-        refreshAssignedOrderTable(assignedOrders)
+        refreshAssignedOrderTable(assignedOrders);
     });
     callback('клиент данные для обновления таблицы Assigned Orders получил!');
-    //console.log("Assigned Orders: " + JSON.stringify(data));
+    //console.log('Assigned Orders: ' + JSON.stringify(data));
 });
 
 socket.on('admin:isAdmin', function(data, callback) {
@@ -111,7 +110,7 @@ socket.on('admin:isAdmin', function(data, callback) {
         setTitlePanel(isDriver, isAdmin);
     });
     callback('isAdmin доставлен клиенту');
-    //console.log("isAdmin: " + JSON.stringify(data));
+    //console.log('isAdmin: ' + JSON.stringify(data));
 });
 
 socket.on('admin:send', function(data, callback) {
@@ -124,22 +123,22 @@ socket.on('admin:send', function(data, callback) {
         refreshAdminListOfClientsTable(listOfClients);
     });
     callback('клиент данные для обновления таблиц Admin Panel получил!');
-    //console.log("isAdmin: " + JSON.stringify(data));
+    //console.log('isAdmin: ' + JSON.stringify(data));
 });
 
 socket.on('connect', function() {
-    console.log("connected!");
+    console.log('connected!');
     socketOrdersUpdate();
     socketGetAssignedOrders();
 });
 
 socket.on('disconnect', function() {
-    console.log("connection lost");
+    console.log('connection lost');
     this.$emit('error');
 });
 
 socket.on('sendid', function(data) {
-    console.log("Your socket ID is: " + data.id);
+    console.log('Your socket ID is: ' + data.id);
 });
 
 socket.on('error', function() {
@@ -151,7 +150,7 @@ socket.on('error', function() {
 
 // ---------- interface functions ---------- \\
 
-var refreshNewOrderTable = function (html) {
+var refreshNewOrderTable = function(html) {
     $('table#newOrder tbody').remove();
     $('table#newOrder').append(html);
 };
@@ -199,36 +198,37 @@ var setTitlePanel = function(isDriver, isAdmin) {
 var setHeaderDriverTable = function(isDriver) {
     if (isDriver) {
         var html = '';
-        html += "<div id='assignedOrderDiv'>";
-        html += "<h4 class='center'>Assigned orders</h4>";
-        html += "<table id='assignedOrder' class='table table-hover'>";
-        html += "<thead><tr>";
-        html += "<th>Start address</th>";
-        html += "<th>Destination address</th>";
-        html += "<th>Status</th>";
-        html += "</tr></thead>";
-        html += "<tbody><tr>";
-        html += "<td colspan='3' class='text-center'>- empty or update with 10 second delay -</td>";
-        html += "</tr></tbody>";
-        html += "</table>";
-        html += "<br>";
-        html += "</div>";
+        html += '<div id="assignedOrderDiv">';
+        html += '<h4 class="center">Assigned orders</h4>';
+        html += '<table id="assignedOrder" class="table table-hover">';
+        html += '<thead><tr>';
+        html += '<th>Start address</th>';
+        html += '<th>Destination address</th>';
+        html += '<th>Status</th>';
+        html += '</tr></thead>';
+        html += '<tbody><tr>';
+        html += '<td colspan="3" class="text-center">';
+        html += '- empty or update with 10 second delay -' + '</td>';
+        html += '</tr></tbody>';
+        html += '</table>';
+        html += '<br>';
+        html += '</div>';
 
-        $("#assignedOrderDiv").remove();
-        $(".col-md-8").prepend(html);
+        $('#assignedOrderDiv').remove();
+        $('.col-md-8').prepend(html);
     }
 };
 
 var disableAllFields = function() {
-    $("#btnApplyOrder").attr("disabled");
-    $("#btnCreateOrder").attr("disabled");
-    $("#field-nickname").attr("disabled");
-    $("#field-email").attr("disabled");
+    $('#btnApplyOrder').attr('disabled');
+    $('#btnCreateOrder').attr('disabled');
+    $('#field-nickname').attr('disabled');
+    $('#field-email').attr('disabled');
 };
 
 var enableAllFields = function() {
-    $("#btnApplyOrder").removeAttr("disabled");
-    $("#btnCreateOrder").removeAttr("disabled");
-    $("#field-nickname").removeAttr("disabled");
-    $("#field-email").attr("disabled");
+    $('#btnApplyOrder').removeAttr('disabled');
+    $('#btnCreateOrder').removeAttr('disabled');
+    $('#field-nickname').removeAttr('disabled');
+    $('#field-email').attr('disabled');
 };

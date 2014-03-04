@@ -20,11 +20,14 @@ app.phase(bootable.routes('routes/', app));
 
 // Boot app
 app.boot(function(err) {
-    if (err) throw err;
+    if (err) { throw err }
     var server = require('http').createServer(app);
     server.listen(config.get('port'), function() {
         log.info('Express server listening on port ' + config.get('port'));
     });
+
+    //save link on server
+    app.set('server', server);
 
     // Socket
     var io = require('./socket')(server);

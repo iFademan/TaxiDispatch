@@ -1,10 +1,10 @@
 $(function() {
     // Datepicker
     $('.input-group.date').datepicker({
-        format: "dd/mm/yyyy",
+        format: 'dd/mm/yyyy',
         startView: 1,
         todayBtn: true,
-        language: "ru",
+        language: 'ru',
         autoclose: true
     });
 
@@ -26,5 +26,5 @@ $(function() {
     checkboxDriver.on('switch-change', function() {
         $('#driverLicenseId').slideToggle(200);
         $('#experience').slideToggle(200);
-    })
+    });
 });

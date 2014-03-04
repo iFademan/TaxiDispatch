@@ -7,7 +7,7 @@ function HttpError(status, message) {
     Error.captureStackTrace(this, HttpError);
 
     this.status = status;
-    this.message = message || http.STATUS_CODES[status] || "Error";
+    this.message = message || http.STATUS_CODES[status] || 'Error';
 }
 
 util.inherits(HttpError, Error);

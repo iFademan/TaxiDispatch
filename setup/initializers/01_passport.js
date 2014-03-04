@@ -14,13 +14,17 @@ module.exports = function() {
             passwordField: 'password'
         },
         function(login, password, done) {
-            User.findOne({ login : login }, function(err, user) {
+            var messages = {
+                incorrect_name: { message: 'Incorrect username.' },
+                incorrect_pass: { message: 'Incorrect password.' }
+            };
+            User.findOne({ login: login }, function(err, user) {
                 if (err) { return done(err); }
                 if (!user) {
-                    return done(null, false, { message: 'Incorrect username.' });
+                    return done(null, false, messages.incorrect_name);
                 }
                 if (!user.checkPassword(password)) {
-                    return done(null, false, { message: 'Incorrect password.' });
+                    return done(null, false, messages.incorrect_pass);
                 }
                 return done(null, user);
             });
@@ -35,7 +39,7 @@ module.exports = function() {
     passport.deserializeUser(function(id, done) {
         User.findById(id, function(err, user) {
             if (err) {
-                done(err)
+                done(err);
             } else {
                 log.info('deserializeUser userName:', user.login);
                 done(null, user);

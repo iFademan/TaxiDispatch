@@ -45,9 +45,15 @@ app.boot(function(err) {
     }
 
     function createAdmin(callback) {
-        var users = [
-            { login: 'Admin', name: 'Admin', age: '01/01/1970', smoke: false, gender: 'm', isAdmin: true, password: '111' }
-        ];
+        var users = [{
+            login: 'Admin',
+            name: 'Admin',
+            age: '01/01/1970',
+            smoke: false,
+            gender: 'm',
+            isAdmin: true,
+            password: '111'
+        }];
 
         async.each(users, function(userData, callback) {
             var user = new UserModel(userData);
@@ -55,6 +61,3 @@ app.boot(function(err) {
         }, callback);
     }
 });
-
-
-

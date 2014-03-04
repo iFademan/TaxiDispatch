@@ -30,12 +30,8 @@ module.exports = function(req, res, next) {
     log.info(JSON.stringify(user));
 
     user.save(function(err) {
-        return err
-        ? next(err)
-        : req.login(user, function(err) {
-            return err
-            ? next(err)
-            : res.redirect('/order');
+        return err ? next(err) : req.login(user, function(err) {
+            return err ? next(err) : res.redirect('/order');
         });
     });
 };

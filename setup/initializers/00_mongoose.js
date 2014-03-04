@@ -3,7 +3,7 @@
 var log = require('winston-wrapper')(module);
 var config = require('config');
 var mongoose = require('mongoose');
-var requireTree    = require('require-tree');
+var requireTree = require('require-tree');
 // это не удалять, используется после экспорта
 var models = requireTree('../../models/');
 
@@ -21,10 +21,14 @@ module.exports = function(done) {
     });
 
     try {
-        mongoose.connect(config.get('mongoose:uri'), config.get('mongoose:options'));
+        mongoose.connect(config.get('mongoose:uri'),
+            config.get('mongoose:options'));
         mongoose.connection;
-        log.info('Started connection on ' + (config.get('mongoose:uri')).cyan + ', waiting for it to open...'.grey);
+        log.info('Started connection on ' +
+            (config.get('mongoose:uri')).cyan +
+            ', waiting for it to open...'.grey);
     } catch (err) {
-        log.error(('Setting up failed to connect to ' + config.get('mongoose:uri')).red, err.message);
+        log.error(('Setting up failed to connect to ' +
+            config.get('mongoose:uri')).red, err.message);
     }
 };

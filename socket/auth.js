@@ -4,7 +4,7 @@ var log = require('winston-wrapper')(module);
 var config = require('config');
 var express = require('express');
 
-var passportSocketIo = require("passport.socketio");
+var passportSocketIo = require('passport.socketio');
 var sessionStore = require('libs/sessionStore');
 
 

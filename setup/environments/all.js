@@ -16,16 +16,19 @@ module.exports = function() {
     this.engine('jade', cons.jade);
     this.set('view engine', 'jade');
     this.set('views', path.join(__dirname, '../../views'));
+
     this.use(express.favicon());
     this.use(middleware.expressLog);
     this.use(express.cookieParser());
     this.use(express.bodyParser());
+
     this.use(express.session({
         secret: config.get('session:secret'),
         key: config.get('session:key'),
         cookie: config.get('session:cookie'),
         store: sessionStore
     }));
+
     this.use(express.methodOverride());
 
     this.use(passport.initialize());
