@@ -12,6 +12,11 @@ var mongoose = require('mongoose');
 var User = mongoose.model('user');
 var passport = require('passport');
 
+/**
+ * Описание middleware express
+ **@module {Middleware} Environments
+ * @this {app}
+ */
 module.exports = function() {
     this.engine('jade', cons.jade);
     this.set('view engine', 'jade');

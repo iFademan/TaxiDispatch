@@ -10,24 +10,49 @@ var Admin = require('./admin');
 
 var admin = new Admin();
 
-var Driver = function() {};
+/**
+ * Класс водителя, решает задачи получения и обновления данных
+ * для панели водителя. Таблица ордеров назначенных водителю,
+ * обновляется каждые 10 сек.
+ * @constructor
+ */
+var Driver = function() {
+    /**
+     * Свойство остановки/запуска таймеров
+     * @private
+     * @type {Boolean}
+     */
+    var _stopTimers = false;
 
-var DriverFunc = {
-    _stopTimers: false,
-
-    findAssignedOrders: function(user, callback) {
+    /**
+     * поиск заказа назначенного водителю, заказ может быть только один
+     * @type {Function}
+     * @param {Object} user текущий пользователь
+     * @param {Function} callback Ошибка callback(null),
+     * заказ callback([order])
+     * @this {Driver}
+     */
+    this.findAssignedOrders = function(user, callback) {
         var self = this;
         var timer = setTimeout(function() {
-            self.timerFunc(user, callback);
+            _timerFunc(user, callback);
             self.findAssignedOrders(user, callback);
         }, 10 * 1000);
 
-        if (self._stopTimers) {
+        if (_stopTimers) {
             clearTimeout(timer);
         }
-    },
+    };
 
-    timerFunc: function(user, callback) {
+    /**
+     * Приватная функция для многократного вызова в findAssignedOrders
+     * @type {Function}
+     * @private
+     * @param {Object} user текущий пользователь
+     * @param {Function} callback Ошибка callback(null),
+     * заказ callback([order])
+     */
+    var _timerFunc = function(user, callback) {
         var queryDriver = { _id: user._id, 'driver.order_id': { $ne: null } };
         UserModel.findOne(queryDriver, function(err, driver) {
             if (err) { throw err }
@@ -40,31 +65,47 @@ var DriverFunc = {
                 });
             }
         });
-    },
+    };
 
-    stopTimers: function(user) {
-        var self = this;
+    /**
+     * Остановка таймеров обновления таблиц водителя
+     * @type {Function}
+     * @param {Object} user текущий пользователь
+     * @this {Driver}
+     */
+    this.stopTimers = function(user) {
         this.isTypeAccount(user, function(isDriver, isAdmin) {
             if (isDriver) {
-                self._stopTimers = true;
+                _stopTimers = true;
                 log.info('DRIVER TIMERS STOPPED!'.red);
             }
         });
-    },
+    };
 
-    startTimers: function(user) {
-        var self = this;
+    /**
+     * Запуск таймеров обновления таблиц водителя
+     * @type {Function}
+     * @param {Object} user текущий пользователь
+     * @this {Driver}
+     */
+    this.startTimers = function(user) {
         this.isTypeAccount(user, function(isDriver, isAdmin) {
             if (isDriver) {
-                self._stopTimers = false;
+                _stopTimers = false;
                 log.info('DRIVER TIMERS STARTED!'.green);
             }
         });
-    }
+    };
 };
 
-DriverFunc.isTypeAccount = admin.isTypeAccount;
+/**
+ * Заимствуем функцию из класса Admin
+ * @type {Function}
+ * @see {@link Admin#isTypeAccount}
+ */
+Driver.prototype.isTypeAccount = admin.isTypeAccount;
 
-Driver.prototype = DriverFunc;
-
+/**
+ * Экспортим класс Driver
+ */
 module.exports = Driver;

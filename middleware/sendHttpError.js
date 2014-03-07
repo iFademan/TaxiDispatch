@@ -1,3 +1,10 @@
+/**
+ * Модуль ошибок, пока не используется...
+ *@module SendHttpError
+ * @param {Object} req
+ * @param {Object} res
+ * @param {Function} next
+ */
 module.exports = function(req, res, next) {
     res.sendHttpError = function(error) {
         res.status(error.status);

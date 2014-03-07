@@ -7,6 +7,11 @@ var requireTree = require('require-tree');
 // это не удалять, используется после экспорта
 var models = requireTree('../../models/');
 
+/**
+ * Инициализация и подключение к базе данных через mongoose
+ *@module {Middleware} Environments
+ * @param {Function} done
+ */
 module.exports = function(done) {
     mongoose.connection.on('open', function() {
         log.info('Connected to mongo server!'.green);

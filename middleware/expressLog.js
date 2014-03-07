@@ -2,6 +2,13 @@
 
 var log = require('winston-wrapper')(module);
 
+/**
+ * Небольшое расширение логгера, добавление времени
+ *@module ExpressLog
+ * @param {Object} req
+ * @param {Object} res
+ * @param {Function} next
+ */
 module.exports = function(req, res, next) {
     var date = new Date();
     var hh = date.getHours();

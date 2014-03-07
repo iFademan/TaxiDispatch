@@ -6,17 +6,28 @@ var requireTree = require('require-tree');
 var controllers = requireTree('../controllers');
 var middleware = requireTree('../middleware');
 
+/**
+ * Роутинг всего приложения
+ *@module {Middleware} Routes
+ * @this {app}
+ */
 module.exports = function() {
-    // Get user for views
-    this.all('*', middleware.userHelper);
+    /**
+     * Get user for views
+     */
+    this.all('/*', middleware.userHelper);
 
-    // Only for registred users
+    /**
+     * Only for registred users
+     */
     this.all('/order', middleware.checkAuth);
     this.all('/order/*', middleware.checkAuth);
     this.all('/admin', middleware.checkAdmin);
     this.all('/admin/*', middleware.checkAdmin);
 
-    // Basic routes
+    /**
+     * Basic routes
+     */
     this.get('/', controllers.render('index', {
         title: 'Home'
     }));
@@ -30,7 +41,9 @@ module.exports = function() {
 
     this.get('/order', controllers.orders.order);
 
-    // Auth controllers
+    /**
+     * Auth controllers
+     */
     this.post('/login', controllers.users.login);
     this.post('/register', controllers.users.register);
     this.get('/logout', controllers.users.logout);

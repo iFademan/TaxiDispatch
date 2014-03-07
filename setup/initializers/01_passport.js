@@ -8,6 +8,10 @@ var LocalStrategy = require('passport-local').Strategy;
 var mongoose = require('mongoose');
 var User = mongoose.model('user');
 
+/**
+ * Модуль авторизации через passport.js (локальная стратегия)
+ *@module {Middleware} Passport
+ */
 module.exports = function() {
     passport.use(new LocalStrategy({
             usernameField: 'login',

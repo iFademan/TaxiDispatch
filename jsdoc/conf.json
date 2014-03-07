@@ -1,0 +1,41 @@
+{
+    "tags": {
+        "allowUnknownTags": true
+    },
+    "source": {
+        "include": [
+            "./socket",
+            "./routes",
+            "./setup",
+            "./middleware",
+            "./error",
+            "./controllers",
+            "./models",
+            "./public/js",
+            "README.md"
+        ],
+        "exclude": [],
+        "includePattern": ".+\\.js(doc)?$",
+        "excludePattern": "(^|\\/|\\\\)_"
+    },
+    "plugins": [],
+    "templates": {
+        "cleverLinks": false,
+        "monospaceLinks": true,
+        "systemName": "TaxiDispatch",
+        "footer": "Created by Anton Bagrov",
+        "copyright": "2014",
+        "navType": "vertical",
+        "theme": "flatly",
+        "linenums": true,
+        "collapseSymbols": true,
+        "inverseNav": false
+    },
+    "opts": {
+        "template": "node_modules/ink-docstrap/template",
+        "encoding": "utf8",
+        "destination": "./jsdoc/",
+        "recurse": true,
+        "private":true
+    }
+}

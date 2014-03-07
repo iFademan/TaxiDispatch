@@ -10,13 +10,27 @@ var Order = require('./order');
 
 var order = new Order();
 
-var Admin = function() {};
+/**
+ * Класс админа, решает задачи получения и обновления данных
+ * для админской панели. Все таблицы обновляются с интервалом в 10 сек.
+ * @constructor
+ */
+var Admin = function() {
+    /**
+     * Свойство остановки/запуска таймеров
+     * @private
+     * @type {Boolean}
+     */
+    var _stopTimers = false;
 
-var AdminFunc = {
-    _stopTimers: false,
-
-    // Список клиентов
-    listOfClients: function(callback) {
+    /**
+     * Получаем список клиентов
+     * @type {Function}
+     * @param {Function} callback Клиенты callback(null, clients),
+     * ошибка callback(err, null)
+     * @this {Admin}
+     */
+    this.listOfClients = function(callback) {
         var self = this;
         var findClients = { isAdmin: false, driver: { $exists: false } };
         var timer = setTimeout(function() {
@@ -27,13 +41,19 @@ var AdminFunc = {
             self.listOfClients(callback);
         }, 10 * 1000);
 
-        if (self._stopTimers) {
+        if (_stopTimers) {
             clearTimeout(timer);
         }
-    },
+    };
 
-    // Список свободных водителей
-    listOfFreeDrivers: function(callback) {
+    /**
+     * Получаем список свободных водителей
+     * @type {Function}
+     * @param {Function} callback Водители callback(null, drivers),
+     * ошибка callback(err, null)
+     * @this {Admin}
+     */
+    this.listOfFreeDrivers = function(callback) {
         var self = this;
         var freeDriver = { 'driver.order_id': null, driver: { $exists: true } };
         var timer = setTimeout(function() {
@@ -46,13 +66,19 @@ var AdminFunc = {
             self.listOfFreeDrivers(callback);
         }, 10 * 1000);
 
-        if (self._stopTimers) {
+        if (_stopTimers) {
             clearTimeout(timer);
         }
-    },
+    };
 
-    // Все новые ордера
-    listAllNewOrders: function(callback) {
+    /**
+     * Получаем все новые ордера
+     * @type {Function}
+     * @param {Function} callback Новые ордера callback(null, newOrders),
+     * ошибка callback(err, null)
+     * @this {Admin}
+     */
+    this.listAllNewOrders = function(callback) {
         var self = this;
         var timer = setTimeout(function() {
             OrderModel.find({ new: 'true' }, function(err, newOrders) {
@@ -62,12 +88,19 @@ var AdminFunc = {
             self.listAllNewOrders(callback);
         }, 10 * 1000);
 
-        if (self._stopTimers) {
+        if (_stopTimers) {
             clearTimeout(timer);
         }
-    },
+    };
 
-    updateAdminTables: function(socket, callback) {
+    /**
+     * Обновляет все таблицы в режиме администратора
+     * @type {Function}
+     * @param {Object} socket объект socket.io
+     * @param {Function} callback Возвращает 3 курсора в объекте data
+     * @this {Admin}
+     */
+    this.updateAdminTables = function(socket, callback) {
         var self = this;
         var actions = [
             function(callback) { self.listOfFreeDrivers(callback) },
@@ -82,7 +115,7 @@ var AdminFunc = {
 
             socket.emit('admin:send', {
                 listFreeDrivers: self.sendDriversTable(listFreeDrivers),
-                listAllNewOrders: self.sendTableOrders(listAllNewOrders),
+                listAllNewOrders: self.genTableOrders(listAllNewOrders),
                 listOfClients: self.sendClientsTable(listOfClients)
             }, function(callback) {
                 log.info(('updateAdminTables:').yellow + ' ' + callback);
@@ -90,9 +123,15 @@ var AdminFunc = {
 
             callback(data);
         });
-    },
+    };
 
-    sendDriversTable: function(drivers) {
+    /**
+     * Создает html-таблицу для свободных водителей
+     * @type {Function}
+     * @param {Cursor} drivers
+     * @return {String} html
+     */
+    this.sendDriversTable = function(drivers) {
         var html = '';
         if (drivers != null && drivers != '' && drivers.length) {
             html += '<tbody>';
@@ -111,9 +150,15 @@ var AdminFunc = {
             html += ' - empty - ' + '</td></tr></tbody>';
         }
         return html;
-    },
+    };
 
-    sendClientsTable: function(clients) {
+    /**
+     * Создает html-таблицу для всех клиентов
+     * @type {Function}
+     * @param {Cursor} clients
+     * @return {string} html
+     */
+    this.sendClientsTable = function(clients) {
         var html = '';
         if (clients != null && clients != '' && clients.length) {
             html += '<tbody>';
@@ -130,40 +175,62 @@ var AdminFunc = {
             html += ' - empty - ' + '</td></tr></tbody>';
         }
         return html;
-    },
+    };
 
-    // Водитель /клиент/админ
-    isTypeAccount: function(user, callback) {
+    /**
+     * Определяем тип пользователя
+     * @type {Function}
+     * @param {Object} user текущий пользователь
+     * @param {Function} callback Водитель callback(true, false),
+     * клиент callback(false, false), админ callback(false, true)
+     */
+    this.isTypeAccount = function(user, callback) {
         var query = { _id: user._id, driver: { $exists: true } };
         UserModel.findOne(query, function(err, driver) {
             if (err) { throw err }
             callback(driver != null && driver != '', user.isAdmin);
         });
-    },
+    };
 
-    stopTimers: function(user) {
-        var self = this;
+    /**
+     * Остановка таймеров обновления таблиц админа
+     * @type {Function}
+     * @param {Object} user текущий пользователь
+     * @this {Admin}
+     */
+    this.stopTimers = function(user) {
         this.isTypeAccount(user, function(isDriver, isAdmin) {
             if (isAdmin) {
-                self._stopTimers = true;
+                _stopTimers = true;
                 log.info('ADMIN TIMERS STOPPED!'.red);
             }
         });
-    },
+    };
 
-    startTimers: function(user) {
-        var self = this;
+    /**
+     * Старт таймеров обновления таблиц админа
+     * @type {Function}
+     * @param {Object} user текущий пользователь
+     * @this {Admin}
+     */
+    this.startTimers = function(user) {
         this.isTypeAccount(user, function(isDriver, isAdmin) {
             if (isAdmin) {
-                self._stopTimers = false;
+                _stopTimers = false;
                 log.info('ADMIN TIMERS STARTED!'.green);
             }
         });
-    }
+    };
 };
 
-AdminFunc.sendTableOrders = order.sendTableOrders;
+/**
+ * Заимствуем функцию из класса Order
+ * @type {Function}
+ * @see {@link Order#genTableOrders}
+ */
+Admin.prototype.genTableOrders = order.genTableOrders;
 
-Admin.prototype = AdminFunc;
-
+/**
+ * Экспортим класс Admin
+ */
 module.exports = Admin;
