@@ -11,23 +11,23 @@ var Order = require('./order');
 var order = new Order();
 
 /**
- * Класс админа, решает задачи получения и обновления данных
- * для админской панели. Все таблицы обновляются с интервалом в 10 сек.
+ * Class administrator, solves the problem of obtaining and updating data
+ * for admins panel. All tables are updated every 10 seconds.
  * @constructor
  */
 var Admin = function() {
     /**
-     * Свойство остановки/запуска таймеров
+     * Property stop / start timer
      * @private
      * @type {Boolean}
      */
     var _stopTimers = false;
 
     /**
-     * Получаем список клиентов
+     * Get the list of clients
      * @type {Function}
-     * @param {Function} callback Клиенты callback(null, clients),
-     * ошибка callback(err, null)
+     * @param {Function} callback Clients callback(null, clients),
+     * error callback(err, null)
      * @this {Admin}
      */
     this.listOfClients = function(callback) {
@@ -47,10 +47,10 @@ var Admin = function() {
     };
 
     /**
-     * Получаем список свободных водителей
+     * Get the list of available drivers
      * @type {Function}
-     * @param {Function} callback Водители callback(null, drivers),
-     * ошибка callback(err, null)
+     * @param {Function} callback Drivers callback(null, drivers),
+     * error callback(err, null)
      * @this {Admin}
      */
     this.listOfFreeDrivers = function(callback) {
@@ -72,10 +72,10 @@ var Admin = function() {
     };
 
     /**
-     * Получаем все новые ордера
+     * Get all new orders
      * @type {Function}
-     * @param {Function} callback Новые ордера callback(null, newOrders),
-     * ошибка callback(err, null)
+     * @param {Function} callback New orders callback(null, newOrders),
+     * error callback(err, null)
      * @this {Admin}
      */
     this.listAllNewOrders = function(callback) {
@@ -94,10 +94,10 @@ var Admin = function() {
     };
 
     /**
-     * Обновляет все таблицы в режиме администратора
+     * Updates all tables in the administrator mode
      * @type {Function}
-     * @param {Object} socket объект socket.io
-     * @param {Function} callback Возвращает 3 курсора в объекте data
+     * @param {Object} socket The object of socket.io
+     * @param {Function} callback 3 returns the cursor to the object data
      * @this {Admin}
      */
     this.updateAdminTables = function(socket, callback) {
@@ -126,7 +126,7 @@ var Admin = function() {
     };
 
     /**
-     * Создает html-таблицу для свободных водителей
+     * Creates a html-table for free drivers
      * @type {Function}
      * @param {Cursor} drivers
      * @return {String} html
@@ -153,7 +153,7 @@ var Admin = function() {
     };
 
     /**
-     * Создает html-таблицу для всех клиентов
+     * Creates a html-table for all clients
      * @type {Function}
      * @param {Cursor} clients
      * @return {string} html
@@ -178,11 +178,11 @@ var Admin = function() {
     };
 
     /**
-     * Определяем тип пользователя
+     * Determine the type of user
      * @type {Function}
-     * @param {Object} user текущий пользователь
-     * @param {Function} callback Водитель callback(true, false),
-     * клиент callback(false, false), админ callback(false, true)
+     * @param {Object} user The current user
+     * @param {Function} callback Driver callback(true, false),
+     * client callback(false, false), admin callback(false, true)
      */
     this.isTypeAccount = function(user, callback) {
         var query = { _id: user._id, driver: { $exists: true } };
@@ -193,9 +193,9 @@ var Admin = function() {
     };
 
     /**
-     * Остановка таймеров обновления таблиц админа
+     * Stop timers table updates admin
      * @type {Function}
-     * @param {Object} user текущий пользователь
+     * @param {Object} user The current user
      * @this {Admin}
      */
     this.stopTimers = function(user) {
@@ -208,9 +208,9 @@ var Admin = function() {
     };
 
     /**
-     * Старт таймеров обновления таблиц админа
+     * Start timers table updates admin
      * @type {Function}
-     * @param {Object} user текущий пользователь
+     * @param {Object} user The current user
      * @this {Admin}
      */
     this.startTimers = function(user) {
@@ -224,13 +224,13 @@ var Admin = function() {
 };
 
 /**
- * Заимствуем функцию из класса Order
+ * Borrow a function in the Order
  * @type {Function}
  * @see {@link Order#genTableOrders}
  */
 Admin.prototype.genTableOrders = order.genTableOrders;
 
 /**
- * Экспортим класс Admin
+ * Export class Admin
  */
 module.exports = Admin;

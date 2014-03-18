@@ -5,7 +5,7 @@ var MongoStore = require('connect-mongo')(express);
 var sessionStore = new MongoStore({ mongoose_connection: mongoose.connection });
 
 /**
- * Экспортим хранилище сессий
+ * Export repository sessions
  * @type {MongoStore}
  */
 module.exports = sessionStore;

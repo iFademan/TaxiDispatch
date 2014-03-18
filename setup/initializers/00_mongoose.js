@@ -8,7 +8,7 @@ var requireTree = require('require-tree');
 var models = requireTree('../../models/');
 
 /**
- * Инициализация и подключение к базе данных через mongoose
+ * Initialization and connection to the database through the mongoose
  *@module {Middleware} Environments
  * @param {Function} done
  */

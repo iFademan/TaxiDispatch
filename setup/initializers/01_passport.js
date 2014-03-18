@@ -9,7 +9,7 @@ var mongoose = require('mongoose');
 var User = mongoose.model('user');
 
 /**
- * Модуль авторизации через passport.js (локальная стратегия)
+ * Module to authenticate via passport.js (local strategy)
  *@module {Middleware} Passport
  */
 module.exports = function() {

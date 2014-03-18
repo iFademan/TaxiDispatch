@@ -13,7 +13,7 @@ var User = mongoose.model('user');
 var passport = require('passport');
 
 /**
- * Описание middleware express
+ * Description middleware express
  **@module {Middleware} Environments
  * @this {app}
  */

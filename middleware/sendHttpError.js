@@ -1,5 +1,5 @@
 /**
- * Модуль ошибок, пока не используется...
+ * Module error until an unused ...
  *@module SendHttpError
  * @param {Object} req
  * @param {Object} res

@@ -7,7 +7,7 @@ var isAdmin = null;
 var assignedOrders = null;
 
 /**
- * Сокет на клиентской части
+ * Socket on the client side
  *@example
  * var socket = io.connect('', {
  *    reconnect: false
@@ -18,7 +18,7 @@ var socket = io.connect('', {
 });
 
 /**
- * Отправка запросов и получение данных от сервера на клиентской части
+ * Sending requests and receiving data from the server to the client side
  *@module SocketClient
  */
 $(function() {
@@ -28,7 +28,7 @@ $(function() {
     var endField = $('#field-email');
 
     /**
-     * Отправка данных на создание нового ордера, собственно сам клик
+     * Sending data to create a new order, click
      */
     btnCreateOrder.click(function() {
         if (startField.val() && endField.val()) {
@@ -43,7 +43,7 @@ $(function() {
     });
 
     /**
-     * Запуск (обработка) всех ранее созданных заказов
+     * Running (processing) of all previously created orders
      */
     btnApplyOrder.click(function() {
         socketOrdersApply();
@@ -52,14 +52,13 @@ $(function() {
 });
 
 /**
- * Отправка запроса (на сервер) emit('orders:create'),
- * на создание заказа
+ * Sending a request (the server) emit('orders: create'), to create order
  * @type {Function}
- * @param {Object} data передаем серверу из формы "создания заказа"
- * объект следующего типа {startAddress: text, endAddress: text}
+ * @param {Object} data Passed to the server from a form of "create order"
+ * object of type {startAddress: text, endAddress: text}
  */
 var socketOrdersCreate = function(data) {
-    console.log('заказ создается...');
+    console.log('The order a now is created...');
     socket.emit('orders:create', data, function(callback) {
         console.log(callback);
         //$('#btnApplyOrder').removeAttr('disabled');
@@ -67,25 +66,25 @@ var socketOrdersCreate = function(data) {
 };
 
 /**
- * Отправка запроса (на сервер) emit('orders:update'),
- * на обновление таблиц (таблиц заказов) текущего пользователя, по завершению
- * придет callback
+ * Sending a request (the server) emit('orders: update'), to update
+ * the tables (tables of orders) of the current user, the completion
+ * callback will
  * @type {Function}
  */
 var socketOrdersUpdate = function() {
-    console.log('заказы обновляются...');
+    console.log('orders is updated...');
     socket.emit('orders:update', function(callback) {
         console.log(callback);
     });
 };
 
 /**
- * Отправка запроса (на сервер) emit('orders:apply'),
- * на запуск обработки очереди заказов
+ * Sending a request (the server) emit('orders: apply'), to start
+ * the queue processing orders
  * @type {Function}
  */
 var socketOrdersApply = function() {
-    console.log('обрабатываем заказы...');
+    console.log('process orders...');
     //disableAllFields();
     socket.emit('orders:apply', function(callback) {
         console.log(callback);
@@ -93,35 +92,34 @@ var socketOrdersApply = function() {
 };
 
 /**
- * Отправка запроса (на сервер) emit('orders:delete'),
- * на удаление заказа (ордера)
+ * Sending a request (the server) emit('orders: delete'),
+ * to delete the order
  * @type {Function}
  */
 var socketOrdersDelete = function() {
-    console.log('заказ удаляется...');
+    console.log('order is removed...');
     socket.emit('orders:delete', function(callback) {
         console.log(callback);
     });
 };
 
 /**
- * Отправка запроса (на сервер) emit('drivers:assigned'),
- * для получения заказов назначенных водителю
+ * Sending a request (the server) emit('drivers: assigned'),
+ * to obtain orders designated driver
  * @type {Function}
  */
 var socketGetAssignedOrders = function() {
-    console.log('получаем назначенные водителю заказы...');
+    console.log('get orders designated driver...');
     socket.emit('drivers:assigned', function(callback) {
         console.log(callback);
     });
 };
 
 /**
- * Получаем с сервера данные, таблицы новых и старых ордеров, обновляем их
- * на клиенте
- * @param {Object} data данные с сервера, таблицы в html виде
- * @param {Function} callback отправляем серверу в качестве подтверждения
- * полученных данных
+ * Obtain data from the server, the table of new and old orders,
+ * updating them on the client
+ * @param {Object} data Data from the server table in html form
+ * @param {Function} callback Send to the server as the data confirm
  *@event module:SocketClient#orders:get
  */
 socket.on('orders:get', function(data, callback) {
@@ -131,16 +129,16 @@ socket.on('orders:get', function(data, callback) {
         refreshOldOrderTable(oldOrders);
         refreshNewOrderTable(newOrder);
     });
-    callback('клиент данные для обновления таблиц New/Old Orders получил!');
+    callback('Client. Data for updating tables New / Old Orders received!');
 });
 
 /**
- * Получаем с сервера данные о типе аккаунта, устанавливаем заголовок
- * водительской панели, вставляем шапку таблицы для ордеров назначенных водителю
- * @param {Object} data данные с сервера о типе клиента, в данном случае
+ * Obtain data from the server type account, set the title of the panel driver,
+ * insert the table header for orders designated driver
+ * @param {Object} data Data from a server on the client type,
+ * in this case the driver
  * водителе
- * @param {Function} callback отправляем серверу в качестве подтверждения
- * полученных данных
+ * @param {Function} callback Send to the server as the data confirm
  *@event module:SocketClient#orders:isDriver
  */
 socket.on('orders:isDriver', function(data, callback) {
@@ -149,16 +147,15 @@ socket.on('orders:isDriver', function(data, callback) {
         setTitlePanel(isDriver, isAdmin);
         setHeaderDriverTable(isDriver);
     });
-    callback('isDriver доставлен клиенту');
+    callback('isDriver delivered to client');
     console.log('User isDriver: ' + JSON.stringify(data));
 });
 
 /**
- * Получаем данные с сервера о таблице назначенных водителю ордеров и обновляем
- * таблицу на клиенте
- * @param {Object} data данные с сервера, таблица ордеров назначенных водителю
- * @param {Function} callback отправляем серверу в качестве подтверждения
- * полученных данных
+ * Obtain data from a server on the table designated driver orders and
+ * update the table on the client
+ * @param {Object} data Data from the server, the table orders designated driver
+ * @param {Function} callback Send to the server as the data confirm
  *@event module:SocketClient#drivers:getAssigned
  */
 socket.on('drivers:getAssigned', function(data, callback) {
@@ -166,16 +163,15 @@ socket.on('drivers:getAssigned', function(data, callback) {
     $(function() {
         refreshAssignedOrderTable(assignedOrders);
     });
-    callback('клиент данные для обновления таблицы Assigned Orders получил!');
+    callback('Client. Data to update the table Assigned Orders received!');
     //console.log('Assigned Orders: ' + JSON.stringify(data));
 });
 
 /**
- * Получаем с сервера данные о типе аккаунта и устанавливаем заголовок
- * админской панели
- * @param {Boolean} data данные с сервера о типе клиента, в данном случае админе
- * @param {Function} callback отправляем серверу в качестве подтверждения
- * полученных данных
+ * Obtain data from the server type account and set the caption panel admins
+ * @param {Boolean} data Data from a server on the client type,
+ * in this case admin
+ * @param {Function} callback Send to the server as the data confirm
  *@event module:SocketClient#admin:isAdmin
  */
 socket.on('admin:isAdmin', function(data, callback) {
@@ -183,16 +179,15 @@ socket.on('admin:isAdmin', function(data, callback) {
     $(function() {
         setTitlePanel(isDriver, isAdmin);
     });
-    callback('isAdmin доставлен клиенту');
+    callback('isAdmin delivered to client');
     //console.log('isAdmin: ' + JSON.stringify(data));
 });
 
 /**
- * Получаем данные для админской панели с сервера, таблицу свободных водителей,
- * таблицу невыполненных заказов и таблицу клиентов
- * @param {Object} data данные с сервера
- * @param {Function} callback отправляем серверу в качестве подтверждения
- * получения данных
+ * Obtain data from the server admin's panel, table-free drivers, the table
+ * is not completed orders and clients table
+ * @param {Object} data Data from server
+ * @param {Function} callback Send to the server as the data confirm
  *@event module:SocketClient#admin:send
  */
 socket.on('admin:send', function(data, callback) {
@@ -204,14 +199,14 @@ socket.on('admin:send', function(data, callback) {
         refreshAdminListOutstandOrdersTable(listAllNewOrders);
         refreshAdminListOfClientsTable(listOfClients);
     });
-    callback('клиент данные для обновления таблиц Admin Panel получил!');
+    callback('Client. Data for updating tables Admin Panel received!');
     //console.log('isAdmin: ' + JSON.stringify(data));
 });
 
 /**
- * После подключения вызываем событие emit('orders:update') и получаем
- * таблицы с новыми и старыми ордерами (заказами), а так же событие
- * emit('drivers:assigned') и получаем назначенные водителю заказы
+ * After connecting the call event emit('orders: update') and obtain a table
+ * with old and new orders and get a designated driver orders trigger events
+ * emit('drivers: assigned')
  *@event module:SocketClient#connect
  */
 socket.on('connect', function() {
@@ -221,8 +216,7 @@ socket.on('connect', function() {
 });
 
 /**
- * Осуществляем переподключение при разрыве соединения
- * вызовом внутреннего события $emit('error')
+ * Reconnection after disconnection. Call the internal event $emit('error')
  *@event module:SocketClient#disconnect
  */
 socket.on('disconnect', function() {
@@ -231,8 +225,8 @@ socket.on('disconnect', function() {
 });
 
 /**
- * Получение socketID с сервера (просто проверка)
- * @param {Object} data id сокета
+ * Getting socketID server (just checking)
+ * @param {Object} data Socket ID
  *@event module:SocketClient#sendid
  */
 socket.on('sendid', function(data) {
@@ -240,7 +234,7 @@ socket.on('sendid', function(data) {
 });
 
 /**
- * Осуществляем переподключение при ошибке или разрыве соединения по таймеру
+ * Reconnection in case of error or disconnection
  *@event module:SocketClient#error
  */
 socket.on('error', function() {
@@ -250,9 +244,9 @@ socket.on('error', function() {
 });
 
 /**
- * Обновляем таблицу новых ордеров (на клиентском/водительском аккаунте)
+ * Update the table of new orders (on the client/driver account)
  * @type {Function}
- * @param {String} html получаем с сервера готовую html-таблицу с данными
+ * @param {String} html Obtain from the server finished html-table with data
  */
 var refreshNewOrderTable = function(html) {
     $('table#newOrder tbody').remove();
@@ -260,9 +254,9 @@ var refreshNewOrderTable = function(html) {
 };
 
 /**
- * Обновляем таблицу старых ордеров (на клиентском/водительском аккаунте)
+ * Update the table of old orders (on the client/driver account)
  * @type {Function}
- * @param {String} html получаем с сервера готовую html-таблицу с данными
+ * @param {String} html Obtain from the server finished html-table with data
  */
 var refreshOldOrderTable = function(html) {
     $('table#oldOrder tbody').remove();
@@ -270,9 +264,9 @@ var refreshOldOrderTable = function(html) {
 };
 
 /**
- * Обновляем таблицу ордеров назначенных водителя на водительском аккаунте
+ * Update the table of orders designated driver in the driver's account
  * @type {Function}
- * @param {String} html получаем с сервера готовую html-таблицу с данными
+ * @param {String} html Obtain from the server finished html-table with data
  */
 var refreshAssignedOrderTable = function(html) {
     $('table#assignedOrder tbody').remove();
@@ -280,9 +274,9 @@ var refreshAssignedOrderTable = function(html) {
 };
 
 /**
- * Обновляем таблицу свободных водителей на админском аккаунте
+ * Update the table of free drivers on the admin account
  * @type {Function}
- * @param {String} html получаем с сервера готовую html-таблицу с данными
+ * @param {String} html Obtain from the server finished html-table with data
  */
 var refreshAdminListFreeDriverTable = function(html) {
     $('table#listFreeDrivers tbody').remove();
@@ -290,9 +284,9 @@ var refreshAdminListFreeDriverTable = function(html) {
 };
 
 /**
- * Обновляем таблицу невыполненных заказов на админском аккаунте
+ * Updating table not executed orders on the admin account
  * @type {Function}
- * @param {String} html получаем с сервера готовую html-таблицу с данными
+ * @param {String} html Obtain from the server finished html-table with data
  */
 var refreshAdminListOutstandOrdersTable = function(html) {
     $('table#listOutstandOrders tbody').remove();
@@ -300,9 +294,9 @@ var refreshAdminListOutstandOrdersTable = function(html) {
 };
 
 /**
- * Обновляем таблицу клиентов на админском аккаунте
+ * Update the clients table for the admin account
  * @type {Function}
- * @param {String} html получаем с сервера готовую html-таблицу с данными
+ * @param {String} html Obtain from the server finished html-table with data
  */
 var refreshAdminListOfClientsTable = function(html) {
     $('table#listOfClients tbody').remove();
@@ -310,10 +304,10 @@ var refreshAdminListOfClientsTable = function(html) {
 };
 
 /**
- * Устанавливаем заголовок панели
+ * Set the title panel
  * @type {Function}
- * @param {Boolean} isDriver проверка на водителя
- * @param {Boolean} isAdmin проверка на админа
+ * @param {Boolean} isDriver Check on the driver
+ * @param {Boolean} isAdmin Check on the admin
  */
 var setTitlePanel = function(isDriver, isAdmin) {
     var titlePanel = $('h2.center');
@@ -330,9 +324,9 @@ var setTitlePanel = function(isDriver, isAdmin) {
 };
 
 /**
- * Добавляем шапку таблицы для водителя
+ * Add table header for the driver
  * @type {Function}
- * @param {Boolean} isDriver дополнительная проверочка на водителя
+ * @param {Boolean} isDriver Additional check on the driver
  */
 var setHeaderDriverTable = function(isDriver) {
     if (isDriver) {
@@ -359,7 +353,7 @@ var setHeaderDriverTable = function(isDriver) {
 };
 
 /**
- * Делаем неактивными все поля формы "отправки заказа"
+ * Making inactive in all fields "send order"
  * @type {Function}
  */
 var disableAllFields = function() {
@@ -370,7 +364,7 @@ var disableAllFields = function() {
 };
 
 /**
- * Делаем активными все поля формы "отправки заказа"
+ * Making active in all fields "send order"
  * @type {Function}
  */
 var enableAllFields = function() {

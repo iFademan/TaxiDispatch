@@ -3,7 +3,7 @@
 var log = require('winston-wrapper')(module);
 
 /**
- * Проверка пользователя на флаг админа
+ * User verification on the flag admin
  *@module {Middleware} CheckAdmin
  * @param {Object} req
  * @param {Object} res

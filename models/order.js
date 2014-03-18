@@ -6,42 +6,43 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 /**
- * Модель ордера (заказа)
+ * Model Order
  *@module Model:Order
  * @type {Schema}
  */
 var schema = new Schema({
     /**
-     * ID пользователя которому принадлежит заказ.
+     * User ID that owns the order
      * Required: true
      *@membersof Model:Order
      * @type {Object}
      */
     user_id: { type: Object, required: true },
     /**
-     * Адрес отправки (откуда будут ехать).
+     * Start address (where will go).
      * Required: true
      *@membersof Model:Order
      * @type {String}
      */
     start_address: { type: String, required: true },
     /**
-     * Конечный адрес (куда ехать).
+     * End address (where to go).
      * Required: true
      *@membersof Model:Order
      * @type {String}
-     *@todo Нужна валидация
+     *@todo Need validation
      */
     end_address: { type: String, required: true },
     /**
-     * ID водителя назначенного на заказ
+     * Id driver assigned to order
      *@membersof Model:Order
      * @type {Object}
-     *@todo Нужна валидация
+     *@todo Need validation
      */
     driver_id: { type: Object },
     /**
-     * Статус заказа, возможные статусы описаны в классе {@link Status}.
+     * Order status, possible statuses are described
+     * in the class {@link Status}.
      * Required: true
      *@membersof Model:Order
      * @type {String}
@@ -49,14 +50,14 @@ var schema = new Schema({
      */
     status: { type: String, required: true },
     /**
-     * Флаг нового заказа
+     * The flag of the new order
      *@membersof Model:Order
      * @type {Boolean}
      *@default false
      */
     new: { type: Boolean, default: false },
     /**
-     * Дата создания документа (создается автоматически)
+     * Date of creating document (created automatically)
      *@membersof Model:Order
      * @type {Date}
      *@default Date.now

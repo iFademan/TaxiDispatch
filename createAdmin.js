@@ -11,16 +11,24 @@ var bootableEnv = require('bootable-environment');
 
 var app = bootable(express());
 
-// Setup initializers
+/**
+ * Setup initializers
+ */
 app.phase(bootable.initializers('setup/initializers/'));
 
-// Setup environments
+/**
+ * Setup environments
+ */
 app.phase(bootableEnv('setup/environments/', app));
 
-// Setup routes
+/**
+ * Setup routes
+ */
 app.phase(bootable.routes('routes/', app));
 
-// Boot app
+/**
+ * Boot app
+ */
 app.boot(function(err) {
     var UserModel = mongoose.model('user');
 

@@ -272,7 +272,7 @@
     
     
     <div class="description">
-        Класс ордеров (заказов)
+        Class orders
     </div>
     
 
@@ -359,7 +359,7 @@
     
     
     <div class="description">
-        Смена статуса заказа
+        Changing the status of your order
     </div>
     
 
@@ -412,8 +412,8 @@
 
             
 
-            <td class="description last">"args.socket" объект socket.io,
-"args.order" объект нового заказа</td>
+            <td class="description last">"args.socket" the object of socket.io,
+"args.order" the object of new order</td>
         </tr>
 
 	
@@ -436,8 +436,8 @@
 
             
 
-            <td class="description last">время в секундах,
-через которое произойдет смена статуса заказа</td>
+            <td class="description last">Time in seconds after which you change
+the status of your order</td>
         </tr>
 
 	
@@ -460,8 +460,8 @@
 
             
 
-            <td class="description last">идентификатор статуса,
-все статусы описаны в config/config.json</td>
+            <td class="description last">Identifier of status, all statuses
+are described in config / config.json</td>
         </tr>
 
 	
@@ -484,8 +484,8 @@
 
             
 
-            <td class="description last">измененный ордер callback(null, order),
-ошибка callback(err, null)</td>
+            <td class="description last">Modified order callback(null, order),
+error callback(err, null)</td>
         </tr>
 
 	
@@ -553,7 +553,7 @@
     
     
     <div class="description">
-        Все ордера пользователя, кроме новых (необработанных)
+        All orders user but new (unprocessed)
     </div>
     
 
@@ -603,7 +603,7 @@
 
             
 
-            <td class="description last">текущий пользователь</td>
+            <td class="description last">The current user</td>
         </tr>
 
 	
@@ -626,8 +626,8 @@
 
             
 
-            <td class="description last">Ошибка callback(err, null),
-заказы callback(null, orders)</td>
+            <td class="description last">Error callback(err, null),
+orders callback(null, orders)</td>
         </tr>
 
 	
@@ -695,7 +695,7 @@
     
     
     <div class="description">
-        Поиск нового ордера
+        Search for a New Order
     </div>
     
 
@@ -745,7 +745,7 @@
 
             
 
-            <td class="description last">текущий пользователь</td>
+            <td class="description last">The current user</td>
         </tr>
 
 	
@@ -768,8 +768,8 @@
 
             
 
-            <td class="description last">Ошибка callback(err, null),
-новый ордер callback(null, newOrders)</td>
+            <td class="description last">Error callback(err, null),
+New order callback(null, newOrders)</td>
         </tr>
 
 	
@@ -837,7 +837,7 @@
     
     
     <div class="description">
-        Генерируем таблицу с заказами
+        Generate html-table with orders
     </div>
     
 
@@ -887,7 +887,7 @@
 
             
 
-            <td class="description last">курсор ордеров (заказов)</td>
+            <td class="description last">Cursor orders (orders)</td>
         </tr>
 
 	
@@ -944,7 +944,7 @@
     
             
 <div class="param-desc">
-    html готовая таблица для вставки на клиенте
+    html Ready to insert a table on the client
 </div>
 
 
@@ -978,7 +978,7 @@
     
     
     <div class="description">
-        Проверка на новый заказ
+        Checking for a new order
     </div>
     
 
@@ -1028,7 +1028,7 @@
 
             
 
-            <td class="description last">список все ордеров</td>
+            <td class="description last">A list of all orders</td>
         </tr>
 
 	
@@ -1051,7 +1051,7 @@
 
             
 
-            <td class="description last">новый ордер callback(newOrder[0])</td>
+            <td class="description last">New order callback(newOrder[0])</td>
         </tr>
 
 	
@@ -1119,7 +1119,7 @@
     
     
     <div class="description">
-        Освобождаем водителя от заказа
+        Relieve the driver of the order
     </div>
     
 
@@ -1169,7 +1169,7 @@
 
             
 
-            <td class="description last">отработанный новый ордер (новый ордер)</td>
+            <td class="description last">Spent new order</td>
         </tr>
 
 	
@@ -1192,7 +1192,7 @@
 
             
 
-            <td class="description last">возвращает водителя с очищенным полем заказа,
+            <td class="description last">Driver returns with purified field order,
 driver.order_id: null, callback(driver) driver = cursor mongodb</td>
         </tr>
 
@@ -1261,7 +1261,7 @@ driver.order_id: null, callback(driver) driver = cursor mongodb</td>
     
     
     <div class="description">
-        Назначение свободного водителя на заказ
+        Assignment driver free to order
     </div>
     
 
@@ -1311,8 +1311,8 @@ driver.order_id: null, callback(driver) driver = cursor mongodb</td>
 
             
 
-            <td class="description last">"args.socket" объект socket.io,
-"args.order" объект нового заказа</td>
+            <td class="description last">"args.socket" the object of socket.io,
+"args.order" the object of new order</td>
         </tr>
 
 	
@@ -1335,8 +1335,8 @@ driver.order_id: null, callback(driver) driver = cursor mongodb</td>
 
             
 
-            <td class="description last">время в секундах,
-через которое произойдет повторный поиск свободного водителя</td>
+            <td class="description last">Time in seconds after which will re-search
+free driver</td>
         </tr>
 
 	
@@ -1359,8 +1359,8 @@ driver.order_id: null, callback(driver) driver = cursor mongodb</td>
 
             
 
-            <td class="description last">водитель с назначенным заказом
-callback(null, driver), ошибка callback(err, null)</td>
+            <td class="description last">Driver with a designated order
+callback(null, driver), Error callback(err, null)</td>
         </tr>
 
 	
@@ -1428,7 +1428,7 @@ callback(null, driver), ошибка callback(err, null)</td>
     
     
     <div class="description">
-        Обновление таблиц новых и старых ордеров (заказов)
+        Update tables of new and old orders
     </div>
     
 
@@ -1481,7 +1481,7 @@ callback(null, driver), ошибка callback(err, null)</td>
 
             
 
-            <td class="description last">объект socket.io</td>
+            <td class="description last">The object of socket.io</td>
         </tr>
 
 	
@@ -1504,8 +1504,7 @@ callback(null, driver), ошибка callback(err, null)</td>
 
             
 
-            <td class="description last">массив объектов новых и
-старых ордеров callback(orders)</td>
+            <td class="description last">An array of new and old orders</td>
         </tr>
 
 	
@@ -1537,7 +1536,7 @@ callback(null, driver), ошибка callback(err, null)</td>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        socket/order.js, line 179
+        socket/order.js, line 178
     </li></ul></dd>
     
 
@@ -1591,7 +1590,7 @@ callback(null, driver), ошибка callback(err, null)</td>
 					
 		<span class="jsdoc-message">
 		Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha4</a>
-		on Sat Mar 08 2014 01:28:51 GMT+0400 (MSK) using the <a href="https://github.com/terryweiss/docstrap">DocStrap template</a>.
+		on Tue Mar 18 2014 22:02:13 GMT+0400 (MSK) using the <a href="https://github.com/terryweiss/docstrap">DocStrap template</a>.
 		</span>
 				</footer>
 			</div>

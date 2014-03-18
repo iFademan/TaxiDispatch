@@ -8,17 +8,17 @@ var passportSocketIo = require('passport.socketio');
 var sessionStore = require('libs/sessionStore');
 
 /**
- * Модуль авторизации через passport.socketio
- * @param {Object} io объект socket.io
+ * Module to authenticate via passport.socketio
+ * @param {Object} io the object of socket.io
  * @constructor
  */
 var SocketAuth = function(io) {
     this.io = io;
 
     /**
-     * Конфигурация сокета для авторизациия через passport.socketio
+     * Socket configuration for authorization through passport.socketio
      * @type {Function}
-     * @param {Object} io объект socket.io
+     * @param {Object} io the object of socket.io
      * @this {SocketAuth}
      */
     this.io.configure(function() {
@@ -66,7 +66,7 @@ function onAuthorizeFail(data, message, error, accept) {
 }
 
 /**
- * Экспортим класс SocketAuth;
+ * Export class SocketAuth
  * @type {Function}
  */
 module.exports = SocketAuth;

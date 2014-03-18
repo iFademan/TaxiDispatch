@@ -7,7 +7,7 @@ var User = mongoose.model('user');
 var Order = mongoose.model('order');
 
 /**
- * Регистрация нового пользователя
+ * New User Registration
  *@module {Middleware} Register
  * @param {Object} req
  * @param {Object} res
@@ -16,7 +16,7 @@ var Order = mongoose.model('order');
  */
 module.exports = function(req, res, next) {
     /**
-     * Формируем объект для регистрации, поля для обычного пользователя
+     * Forming object to register, field for the normal user
      * @private
      * @type {Object}
      */
@@ -30,7 +30,7 @@ module.exports = function(req, res, next) {
     };
 
     /**
-     * Водительская часть данных
+     * Driver of the data
      * @private
      * @type {Object}
      */
@@ -45,7 +45,7 @@ module.exports = function(req, res, next) {
     }
 
     /**
-     * Создаем и сохраняем пользователя в user
+     * Create and store user variable user
      * @private
      * @type {User}
      */
@@ -53,7 +53,8 @@ module.exports = function(req, res, next) {
     log.info(JSON.stringify(user));
 
     /**
-     * Сохраняем в базе и при успешной регистрации редиректим на траницу заказов
+     * Stored in a database and if successful registration redirect
+     * to order page
      */
     user.save(function(err) {
         return err ? next(err) : req.login(user, function(err) {

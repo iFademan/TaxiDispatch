@@ -3,11 +3,11 @@
 var log = require('winston-wrapper')(module);
 
 /**
- * Обертка над res.render(), применение смотреть в {@link module:Routes}
+ * Wrapper over res.render(), look at the use of {@link module:Routes}
  * @see {@link module:Routes}
  *@module Render
- * @param {String} template путь к шаблону
- * @param {Object} variables объект с данными для шаблона
+ * @param {String} template Template path
+ * @param {Object} variables Template data
  * @return {Function}
  */
 module.exports = function(template, variables) {

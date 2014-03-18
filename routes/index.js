@@ -7,7 +7,7 @@ var controllers = requireTree('../controllers');
 var middleware = requireTree('../middleware');
 
 /**
- * Роутинг всего приложения
+ * Routing the entire application
  *@module {Middleware} Routes
  * @this {app}
  */

@@ -4,10 +4,10 @@ var log = require('winston-wrapper')(module);
 var config = require('config');
 var passport = require('passport');
 /**
- * Авторизуемся через passport, определяем тип пользователя и редиректим
- * админа "/admin", водителя или клиента "/order", если авторизация неудачна,
- * то редиректим на форму ввода авторизационных данных "/login". Так же вызываем
- * серверное событие emit('login')
+ * Through authorizing passport, define the type of user
+ * and admin redirect "/admin", the driver or the client "/order",
+ * if authorization fails, then redirect to the authorization
+ * data entry form "/login". As well call the server event emit('login')
  *@module {Middleware} Login
  * @param {Object} req
  * @param {Object} res
@@ -21,7 +21,7 @@ var passport = require('passport');
  */
 module.exports = function(req, res, next) {
     var server = req.app.get('server');
-    log.info('кто-то пытается войти');
+    log.info('someone tries to enter...');
     passport.authenticate('local',
         function(err, user, info) {
             if (err) { next(err) }

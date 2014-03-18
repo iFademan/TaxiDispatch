@@ -11,25 +11,25 @@ var Admin = require('./admin');
 var admin = new Admin();
 
 /**
- * Класс водителя, решает задачи получения и обновления данных
- * для панели водителя. Таблица ордеров назначенных водителю,
- * обновляется каждые 10 сек.
+ * Class Driver solves the problem of obtaining and updating data
+ * for the panel driver. Table of orders designated driver
+ * is updated every 10 seconds.
  * @constructor
  */
 var Driver = function() {
     /**
-     * Свойство остановки/запуска таймеров
+     * Property stop / start timer
      * @private
      * @type {Boolean}
      */
     var _stopTimers = false;
 
     /**
-     * поиск заказа назначенного водителю, заказ может быть только один
+     * Search order designated driver, the order may be only one
      * @type {Function}
-     * @param {Object} user текущий пользователь
-     * @param {Function} callback Ошибка callback(null),
-     * заказ callback([order])
+     * @param {Object} user the current user
+     * @param {Function} callback Error callback(null),
+     * order callback([order])
      * @this {Driver}
      */
     this.findAssignedOrders = function(user, callback) {
@@ -45,12 +45,12 @@ var Driver = function() {
     };
 
     /**
-     * Приватная функция для многократного вызова в findAssignedOrders
+     * Private function for multiple call findAssignedOrders
      * @type {Function}
      * @private
-     * @param {Object} user текущий пользователь
-     * @param {Function} callback Ошибка callback(null),
-     * заказ callback([order])
+     * @param {Object} user the current user
+     * @param {Function} callback Error callback(null),
+     * order callback([order])
      */
     var _timerFunc = function(user, callback) {
         var queryDriver = { _id: user._id, 'driver.order_id': { $ne: null } };
@@ -68,9 +68,9 @@ var Driver = function() {
     };
 
     /**
-     * Остановка таймеров обновления таблиц водителя
+     * Stop timers table updates the driver
      * @type {Function}
-     * @param {Object} user текущий пользователь
+     * @param {Object} user the current user
      * @this {Driver}
      */
     this.stopTimers = function(user) {
@@ -83,9 +83,9 @@ var Driver = function() {
     };
 
     /**
-     * Запуск таймеров обновления таблиц водителя
+     * Running timers table updates the driver
      * @type {Function}
-     * @param {Object} user текущий пользователь
+     * @param {Object} user the current user
      * @this {Driver}
      */
     this.startTimers = function(user) {
@@ -99,13 +99,13 @@ var Driver = function() {
 };
 
 /**
- * Заимствуем функцию из класса Admin
+ * Borrow a function in the Admin
  * @type {Function}
  * @see {@link Admin#isTypeAccount}
  */
 Driver.prototype.isTypeAccount = admin.isTypeAccount;
 
 /**
- * Экспортим класс Driver
+ * Export Class Driver
  */
 module.exports = Driver;

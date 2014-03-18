@@ -3,9 +3,9 @@ var util = require('util');
 var http = require('http');
 
 /**
- * Расширение класса Error, пока не используется
- * @param {Number} status код ошибки
- * @param {String} message сообщение
+ * Extension of the class Error, is not used
+ * @param {Number} status Error code
+ * @param {String} message Message for user
  * @constructor
  */
 function HttpError(status, message) {
@@ -19,7 +19,7 @@ function HttpError(status, message) {
 util.inherits(HttpError, Error);
 
 /**
- * Тип класса
+ * Class type
  * @type {string}
  */
 HttpError.prototype.name = 'HttpError';

@@ -4,7 +4,7 @@ var HttpError = require('error').HttpError;
 var log = require('winston-wrapper')(module);
 
 /**
- * Проверка пользователя на аутентификацию
+ * Checking user authentication
  *@module {Middleware} CheckAuth
  * @param {Object} req
  * @param {Object} res

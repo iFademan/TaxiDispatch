@@ -3,7 +3,7 @@
 var log = require('winston-wrapper')(module);
 
 /**
- * Небольшое расширение логгера, добавление времени
+ * A small extension logger, adding time
  *@module ExpressLog
  * @param {Object} req
  * @param {Object} res

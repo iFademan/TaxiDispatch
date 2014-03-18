@@ -4,54 +4,54 @@ var log = require('winston-wrapper')(module);
 var config = require('config');
 
 /**
- * Класс Status
+ * Class Status
  * @constructor
  */
 var Status = function() {
     /**
-     * Заказ в очереди
+     * Orders in the queue
      * @type {String}
      */
     this.queue = config.get('status:queue:key');
     /**
-     * Поиск водителя
+     * Search driver
      * @type {String}
      */
     this.search = config.get('status:search:key');
     /**
-     * Водитель найден
+     * The driver found
      * @type {String}
      */
     this.found = config.get('status:found:key');
     /**
-     * Водитель едет к месту назначения
+     * Driver goes to the destination
      * @type {String}
      */
     this.going = config.get('status:going:key');
     /**
-     * Водитель на месте назначения
+     * The driver at the destination
      * @type {String}
      */
     this.place = config.get('status:place:key');
     /**
-     * Водитель ожидает
+     * The driver waits
      * @type {String}
      */
     this.waiting = config.get('status:waiting:key');
     /**
-     * Водитель с пассажиром
+     * Driver with passenger
      * @type {String}
      */
     this.passenger = config.get('status:passenger:key');
     /**
-     * Заказ закрыт
+     * Orders closed
      * @type {String}
      */
     this.close = config.get('status:close:key');
 };
 
 /**
- * Экспортим класс Status
+ * Export Class Status
  * @type {Status}
  */
 module.exports = Status;

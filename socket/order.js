@@ -11,16 +11,16 @@ var Status = require('./status');
 var status = new Status();
 
 /**
- * Класс ордеров (заказов)
+ * Class orders
  * @constructor
  */
 var Order = function() {
     /**
-     * Поиск нового ордера
+     * Search for a New Order
      * @type {Function}
-     * @param {Object} user текущий пользователь
-     * @param {Function} callback Ошибка callback(err, null),
-     * новый ордер callback(null, newOrders)
+     * @param {Object} user The current user
+     * @param {Function} callback Error callback(err, null),
+     * New order callback(null, newOrders)
      */
     this.findNewOrderById = function(user, callback) {
         var query = { user_id: user._id, new: 'true' };
@@ -31,11 +31,11 @@ var Order = function() {
     };
 
     /**
-     * Все ордера пользователя, кроме новых (необработанных)
+     * All orders user but new (unprocessed)
      * @type {Function}
-     * @param {Object} user текущий пользователь
-     * @param {Function} callback Ошибка callback(err, null),
-     * заказы callback(null, orders)
+     * @param {Object} user The current user
+     * @param {Function} callback Error callback(err, null),
+     * orders callback(null, orders)
      */
     this.findAllOrdersById = function(user, callback) {
         var query = { user_id: user._id, status: status.close };
@@ -46,10 +46,10 @@ var Order = function() {
     };
 
     /**
-     * Проверка на новый заказ
+     * Checking for a new order
      * @type {Function}
-     * @param {Object} orders список все ордеров
-     * @param {Function} callback новый ордер callback(newOrder[0])
+     * @param {Object} orders A list of all orders
+     * @param {Function} callback New order callback(newOrder[0])
      */
     this.isNewOrder = function(orders, callback) {
         var newOrder = orders[0];
@@ -59,16 +59,16 @@ var Order = function() {
     };
 
     /**
-     * Смена статуса заказа
+     * Changing the status of your order
      * @type {Function}
-     * @param {Object} args "args.socket" объект socket.io,
-     * "args.order" объект нового заказа
-     * @param {Number} sec время в секундах,
-     * через которое произойдет смена статуса заказа
-     * @param {String} localStatus идентификатор статуса,
-     * все статусы описаны в config/config.json
-     * @param {Function} callback измененный ордер callback(null, order),
-     * ошибка callback(err, null)
+     * @param {Object} args "args.socket" the object of socket.io,
+     * "args.order" the object of new order
+     * @param {Number} sec Time in seconds after which you change
+     * the status of your order
+     * @param {String} localStatus Identifier of status, all statuses
+     * are described in config / config.json
+     * @param {Function} callback Modified order callback(null, order),
+     * error callback(err, null)
      * @this {Order}
      */
     this.changeStatus = function(args, sec, localStatus, callback) {
@@ -91,14 +91,14 @@ var Order = function() {
     };
 
     /**
-     * Назначение свободного водителя на заказ
+     * Assignment driver free to order
      * @type {Function}
-     * @param {Object} args "args.socket" объект socket.io,
-     * "args.order" объект нового заказа
-     * @param {Number} sec  время в секундах,
-     * через которое произойдет повторный поиск свободного водителя
-     * @param {Function} callback водитель с назначенным заказом
-     * callback(null, driver), ошибка callback(err, null)
+     * @param {Object} args "args.socket" the object of socket.io,
+     * "args.order" the object of new order
+     * @param {Number} sec Time in seconds after which will re-search
+     * free driver
+     * @param {Function} callback Driver with a designated order
+     * callback(null, driver), Error callback(err, null)
      */
     this.setFreeDriverOnOrder = function(args, sec, callback) {
         var freeDriver = { 'driver.order_id': null, driver: { $exists: true } };
@@ -121,10 +121,10 @@ var Order = function() {
     };
 
     /**
-     * Освобождаем водителя от заказа
+     * Relieve the driver of the order
      * @type {Function}
-     * @param {Cursor} order отработанный новый ордер (новый ордер)
-     * @param {Function} callback возвращает водителя с очищенным полем заказа,
+     * @param {Cursor} order Spent new order
+     * @param {Function} callback Driver returns with purified field order,
      * driver.order_id: null, callback(driver) driver = cursor mongodb
      */
     this.setFreeDriver = function(order, callback) {
@@ -134,16 +134,16 @@ var Order = function() {
         UserModel.update(findOrderId, updateOrderId, function(err, driver) {
             if (err) { throw err }
             callback(driver);
-            log.info(('setFreeDriver:').yellow + ' водитель свободен!');
-            console.log('водитель свободен!');
+            log.info(('setFreeDriver:').yellow + ' driver free!');
+            console.log('driver free!');
         });
     };
 
     /**
-     * Генерируем таблицу с заказами
+     * Generate html-table with orders
      * @type {Function}
-     * @param {Cursor} orders курсор ордеров (заказов)
-     * @return {string} html готовая таблица для вставки на клиенте
+     * @param {Cursor} orders Cursor orders (orders)
+     * @return {string} html Ready to insert a table on the client
      */
     this.genTableOrders = function(orders) {
         var html = '';
@@ -170,10 +170,9 @@ var Order = function() {
     };
 
     /**
-     * Обновление таблиц новых и старых ордеров (заказов)
-     * @param {Object} socket объект socket.io
-     * @param {Function} callback массив объектов новых и
-     * старых ордеров callback(orders)
+     * Update tables of new and old orders
+     * @param {Object} socket The object of socket.io
+     * @param {Function} callback An array of new and old orders
      * @this {Order}
      */
     this.updateTableOrders = function(socket, callback) {
@@ -202,7 +201,7 @@ var Order = function() {
 };
 
 /**
- * Экпортим класс Order
+ * Export Class Order
  * @type {Order}
  */
 module.exports = Order;

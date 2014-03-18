@@ -12,10 +12,10 @@ var Status = require('./status');
 var SocketAuth = require('./auth');
 
 /**
- * Основной событийный цикл
+ * The main event-loop
  *@module Socket
  * @param {EventEmitter} server
- * @return {Object} io объект socket.io
+ * @return {Object} io the object of socket.io
  */
 module.exports = function(server) {
 
@@ -25,7 +25,7 @@ module.exports = function(server) {
     var status = new Status();
 
     /**
-     * Сокет на серверной части
+     * Socket on the server side
      *@global
      *@example
      * var io = require('socket.io').listen(server);
@@ -43,15 +43,14 @@ module.exports = function(server) {
     new SocketAuth(io);
 
     /**
-     * После присоединения подписываемся на остальные события,
-     * получаем пользователя и т.д.
+     * After joining subscribe to other events, we obtain the user, etc.
      *@event module:Socket#connection
      */
     io.sockets.on('connection', function(socket) {
         var user = socket.handshake.user;
 
         /**
-         * Создаем заказ
+         * Create order
          *@event module:Socket#orders:create
          */
         socket.on('orders:create', function(data, callback) {
@@ -67,14 +66,14 @@ module.exports = function(server) {
             orderModel.save(function(err) {
                 if (err) throw err;
                 /**
-                 * Генерим внутренний вызов события на обновление заказов
+                 * Generates an internal call to update the event orders
                  */
                 socket.$emit('orders:update', callback);
             });
         });
 
         /**
-         * Обновляем заказы и заголовок панели
+         * Update orders and panel header
          *@event module:Socket#orders:update
          */
         socket.on('orders:update', function(callback) {
@@ -87,7 +86,7 @@ module.exports = function(server) {
         });
 
         /**
-         * Получаем данные для админской панели
+         * Obtain data for the admin's panel
          *@event module:Socket#admin:data
          */
         socket.on('admin:data', function(callback) {
@@ -95,7 +94,7 @@ module.exports = function(server) {
         });
 
         /**
-         * Получаем заказы назначенные на водителя
+         * Get orders assigned to the driver
          *@event module:Socket#drivers:assigned
          */
         socket.on('drivers:assigned', function(socketCallBack) {
@@ -110,7 +109,7 @@ module.exports = function(server) {
         });
 
         /**
-         * Запускаем заказы в обработку
+         * Run orders processing
          *@event module:Socket#orders:apply
          */
         socket.on('orders:apply', function(socketCallback) {
@@ -124,13 +123,14 @@ module.exports = function(server) {
         });
 
         /**
-         * Последовательная смена статуса у заказа (в дальнейшем смену статуса
-         * можно вынести на кнопки в водительском аккаунте, так чтоб водитель
-         * мог сам менять свой статус по факту). Сейчас сделана автоматическая
-         * смена статуса для наглядного показа функционала
-         * @param {Object} args args.socket наш сокет, args.order новый ордер
-         * @param {Function} socketCallback callback для клиента
-         * об успешной доставке (это для отладки)
+         * Sequential change in status of the order (hereinafter the status
+         * change can make the buttons in the driver's account, so that
+         * the driver can itself change its status on the fact).
+         * Is now done automatically change status for visual demonstration
+         * of the functional
+         * @param {Object} args args.socket our socket, args.order new order
+         * @param {Function} socketCallback callback for the client
+         * has been successfully delivered (this is for debugging)
          */
         var actions = function(args, socketCallback) {
             async.series([
@@ -160,12 +160,12 @@ module.exports = function(server) {
                 }
             ], function(err) {
                 if (err) { throw err }
-                log.info(('SocketEvent:').blue + 'заказ выполнен!');
-                socketCallback('заказ выполнен!');
+                log.info(('SocketEvent:').blue + 'order is executed!');
+                socketCallback('order is executed!');
 
                 /**
-                 * когда заказ выполнен и водитель освобожден, делаем внутренний
-                 * вызов события orders:apply для следующего заказа
+                 * When the order is processed and released the driver,
+                 * make an internal call event orders: apply for next order
                  */
                 order.setFreeDriver(args.order, function(driver) {
                     socket.$emit('orders:apply', socketCallback);
@@ -174,9 +174,9 @@ module.exports = function(server) {
         };
 
         /**
-         * Получаем первый новый заказ (один)
+         * Get the first new order (one)
          * @type {Function}
-         * @param {Function} callback возвращаем новый заказ
+         * @param {Function} callback return new order
          */
         var getNewOrder = function(callback) {
             order.updateTableOrders(socket, function(orders) {
@@ -187,10 +187,9 @@ module.exports = function(server) {
         };
 
         /**
-         * Определяем тип пользователя и какие таблицы
-         * будем периодически обнолять
+         * Determine what type of user and table will be updated periodically
          * @type {Function}
-         * @param {Object} user текущий пользователь
+         * @param {Object} user current user
          */
         var updateSpecialTables = function(user) {
             admin.isTypeAccount(user, function(isDriver, isAdmin) {
@@ -215,7 +214,7 @@ module.exports = function(server) {
         };
 
         /**
-         * Удаляем заказ, пока не используется, все заказы сохраняются
+         * Remove the order (not used yet)
          *@event module:Socket#orders:delete
          */
         socket.on('orders:delete', function(callback) {});
@@ -224,7 +223,7 @@ module.exports = function(server) {
         socket.emit('sendid', { id: socket.id });
 
         /**
-         * Разрыв сокетного соединения
+         * Gap socket connection
          *@event module:Socket#disconnect
          */
         socket.on('disconnect', function() {
@@ -233,8 +232,8 @@ module.exports = function(server) {
     });
 
     /**
-     * Серверное событие запуска таймеров для обновления панелей.
-     * Вызов происходит в контроллерах (модулях) соответственно названию события
+     * Server launch event timers for the update panels. Call occurs
+     * in controllers (modules), respectively event name
      *@event module:Socket#login
      * @see {@link module:Login}
      */
@@ -244,8 +243,8 @@ module.exports = function(server) {
     });
 
     /**
-     * Серверное событие остановки таймеров обновления панелей
-     * Вызов происходит в контроллерах (модулях) соответственно названию события
+     * Server stop event timers update panels. Call occurs
+     * in controllers (modules), respectively event name
      *@event module:Socket#logout
      * @see {@link module:Logout}
      */

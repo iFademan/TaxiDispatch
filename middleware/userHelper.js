@@ -1,6 +1,6 @@
 /**
- * После получения пользователя передает ссылку
- * для представлений (views) через locals
+ * After receiving the user pass a reference to it for the views,
+ * through the locals
  *@module UserHelper
  * @param {Object} req
  * @param {Object} res

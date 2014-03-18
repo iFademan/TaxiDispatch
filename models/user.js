@@ -9,94 +9,94 @@ var util = require('util');
 var Schema = mongoose.Schema;
 
 /**
- * Модель пользователя
+ * Model User
  *@module Model:User
  * @type {Schema}
  */
 var schema = new Schema({
     /**
-     * Имя для входа пользователя в систему.
+     * Name for the user logon.
      * Unique: true, required: true
      *@membersof Model:User
      * @type {String}
      * */
     login: { type: String, unique: true, required: true },
     /**
-     * Имя, настоящее имя пользователя.
+     * Name, user's real name.
      * Required: true
      *@membersof Model:User
      * @type {String}
-     *@todo Нужна валидация
+     *@todo Need validation
      * */
     name: { type: String, required: true },
     /**
-     * Год рождения (пока String с Date какой-то косяк при записи в базу).
+     * Year of birth (пока String с Date какой-то косяк при записи в базу).
      * Required: true
      *@membersof Model:User
      * @type {String}
-     *@todo Нужна валидация
+     *@todo Need validation
      */
     age: { type: String, required: true },
     /**
-     * Курение (курить ли пользователь).
+     * Smoking (smoking is whether the user).
      * Required: true
      *@membersof Model:User
      * @type {Boolean}
      */
     smoke: { type: Boolean, required: true },
     /**
-     * Пол.
+     * Gender.
      * Required: true
      *@membersof Model:User
      * @type {String}
      */
     gender: { type: String, required: true },
     /**
-     * Водитель (если пользователь водитель, то добавится вложенный документ).
+     * Driver (if the user driver, then add an attachment document).
      * Required: false
      *@membersof Model:User
      * @type {Object}
      */
     driver: {
         /**
-         * Номер водтельского удостоверения
+         * Driver's license number
          * @type {Number}
          *@todo Нужна валидация
          */
         driver_license_id: Number,
         /**
-         * Опыт вождения
+         * Driving experience
          * @type {Number}
          *@todo нужна валидация
          */
         experience: Number,
         /**
-         * ID заказа
+         * Order ID
          * @type {Object}
          */
         order_id: { type: Object }
     },
     /**
-     * Идентификатор админа
+     * Admin flag
      *@membersof Model:User
      * @type {Boolean}
      *@default false
      */
     isAdmin: { type: Boolean, default: false },
     /**
-     * Типа пароль :). Required: true
+     * Hashed password. Required: true
      *@membersof Model:User
      * @type {String}
      */
     hashedPassword: { type: String, required: true },
     /**
-     * Соль :). Required: true
+     * Salt :). Required: true
      *@membersof Model:User
      * @type {String}
      */
     salt: { type: String, required: true },
     /**
-     * Дата создания документа (создается автоматически)
+     * Date of creating document (created automatically)
      *@membersof Model:User
      * @type {Date}
      *@default Date.now
@@ -105,9 +105,9 @@ var schema = new Schema({
 });
 
 /**
- * Шифруем пароль
- * @param {String} password пароль из формы
- * @return {*} шифрованный пароль
+ * Encrypt password
+ * @param {String} password Password from the form
+ * @return {*} Encrypted password
  * @type {Function}
  * @this {schema}
  */
@@ -116,8 +116,8 @@ schema.methods.encryptPassword = function(password) {
 };
 
 /**
- * Создаем шифрованный пароль и сохраняем в соответствующие поля
- * при создании пользователя
+ * Create and store an encrypted password in the appropriate fields
+ * when creating a user
  */
 schema.virtual('password').set(function(password) {
     this._plainPassword = password;
@@ -126,9 +126,9 @@ schema.virtual('password').set(function(password) {
 }).get(function() { return this._plainPassword; });
 
 /**
- * Проверка валидности пароля
- * @param {String} password собственно пароль из формы
- * @return {boolean} совпадание кодированной части пароля
+ * Checking validity password
+ * @param {String} password Password from the form
+ * @return {boolean} Coincidence of the encoded part a password
  * @type {Function}
  * @this {schema}
  */

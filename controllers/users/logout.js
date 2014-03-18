@@ -1,9 +1,9 @@
 'use strict';
 
 /**
- * Выходим, чистим куки, отправляем серверу событие emit('logout'), в котором
- * останавливаем работу таймеров, если они предусмотрены для данного
- * пользователя, перенаправляем пользователя на главную страницу
+ * Leave, clean cookies, the server will send an event emit('logout'),
+ * which stops the operation of timers, if they are provided for the user,
+ * redirect the user to the main page
  *@module {Middleware} Logout
  * @param {Object} req
  * @param {Object} res
