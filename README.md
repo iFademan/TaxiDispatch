@@ -12,5 +12,5 @@ Install
 6. And finally run with app.js
 
 License
-----
+============
 MIT
