@@ -10,3 +10,7 @@ Install
 4. Folder public mark as resourse root
 5. First node to run the file createAdmin.js
 6. And finally run with app.js
+
+License
+============
+MIT
